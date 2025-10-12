@@ -8,8 +8,6 @@ try
 {
     Log.Information("Starting Milo Server");
 
-    DotNetEnv.Env.Load();
-
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Host.UseSerilog((context, services, configuration) =>
