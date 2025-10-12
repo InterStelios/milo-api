@@ -6,3 +6,5 @@ riderModule.iml
 logs/
 .claude/
 .idea/
+.env
+*.sln.*.user
