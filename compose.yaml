@@ -1,0 +1,7 @@
+﻿services:
+  miloapi:
+    image: miloapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+
