@@ -7,6 +7,6 @@ public class BackblazeStorageOptions
     public string KeyId { get; set; } = string.Empty;
     public string ApplicationKey { get; set; } = string.Empty;
     public string BucketName { get; set; } = string.Empty;
-    public string Region { get; set; } = "us-west-004";
-    public string ServiceUrl { get; set; } = "https://s3.us-west-004.backblazeb2.com";
+    public string Region { get; set; } = string.Empty;
+    public string ServiceUrl { get; set; } = string.Empty;
 }

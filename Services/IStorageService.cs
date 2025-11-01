@@ -20,6 +20,7 @@ public interface IStorageService
         List<PartETag> parts
     );
     Task<string> GeneratePresignedDownloadUrlAsync(string fileName, int expirationMinutes = 60);
+    Task<string> GeneratePresignedViewUrlAsync(string fileName, int expirationMinutes = 60);
 }
 
 public record MultipartUploadInfo(string UploadId, string FileName);

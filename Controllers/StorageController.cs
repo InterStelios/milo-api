@@ -143,6 +143,28 @@ public class StorageController(
 
         return Ok(new { url });
     }
+
+    [HttpGet("view/presigned-url")]
+    public async Task<IActionResult> GetPresignedViewUrl(
+        [FromQuery] string fileName,
+        [FromQuery] int? expirationMinutes
+    )
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName, nameof(fileName));
+
+        if (expirationMinutes is < 1 or > 10080)
+            throw new ArgumentException(
+                "Expiration minutes must be between 1 and 10080 (7 days)",
+                nameof(expirationMinutes)
+            );
+
+        var url = await storageService.GeneratePresignedViewUrlAsync(
+            fileName,
+            expirationMinutes ?? 60
+        );
+
+        return Ok(new { url });
+    }
 }
 
 public record PresignedUrlRequest(string FileName, string ContentType, int? ExpirationMinutes);

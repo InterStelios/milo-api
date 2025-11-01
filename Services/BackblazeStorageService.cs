@@ -246,4 +246,41 @@ public class BackblazeStorageService : IStorageService
             throw new PresignedUrlGenerationException(fileName, ex);
         }
     }
+
+    public async Task<string> GeneratePresignedViewUrlAsync(
+        string fileName,
+        int expirationMinutes = 60
+    )
+    {
+        _logger.LogDebug(
+            "Generating presigned view URL for {FileName}, ExpirationMinutes: {ExpirationMinutes}",
+            fileName,
+            expirationMinutes
+        );
+
+        try
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = _options.BucketName,
+                Key = fileName,
+                Verb = HttpVerb.GET,
+                Expires = DateTime.UtcNow.AddMinutes(expirationMinutes),
+            };
+            request.ResponseHeaderOverrides.ContentDisposition = "inline";
+
+            var preSignedUrl = await _s3Client.GetPreSignedURLAsync(request);
+
+            return preSignedUrl;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to generate presigned view URL for {FileName}",
+                fileName
+            );
+            throw new PresignedUrlGenerationException(fileName, ex);
+        }
+    }
 }
